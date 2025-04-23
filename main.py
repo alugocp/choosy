@@ -26,12 +26,12 @@ def save_cached_data(data):
 # TUI output logic
 def print_choosy(data):
     print(f"Welcome to {BOLD}Choosy{END}! Here are your options:")
-    print(f"• {GREEN}+<number>{END}  ->  includes the element at an index")
-    print(f"• {GREEN}-<number>{END}  ->  excludes the element at an index")
-    print(f"• {GREEN}_<number>{END}  ->  removes an element from the pool")
-    print(f"• {GREEN}+<string>{END}  ->  adds an element to the pool")
-    print(f"• {GREEN}choose{END}     ->  chooses pairs from the pool")
-    print(f"• {GREEN}q{END}          ->  quits Choosy")
+    print(f" • {GREEN}+<number>{END}  ->  includes the element at an index")
+    print(f" • {GREEN}-<number>{END}  ->  excludes the element at an index")
+    print(f" • {GREEN}_<number>{END}  ->  removes an element from the pool")
+    print(f" • {GREEN}+<string>{END}  ->  adds an element to the pool")
+    print(f" • {GREEN}choose{END}     ->  chooses pairs from the pool")
+    print(f" • {GREEN}q{END}          ->  quits Choosy")
     print("")
     print(f"{UNDER}Pool:{END}")
     if len(data) == 0:
@@ -39,9 +39,9 @@ def print_choosy(data):
     for i in range(len(data)):
         label = data[i]["label"]
         state = data[i]["state"]
-        print(f"• {i} {GREEN}ON{END} {BOLD}{label}{END}" if state else f"• {i} {RED}OFF{END} {BOLD}{label}{END}")
+        print(f" • {i} {GREEN}ON{END} {BOLD}{label}{END}" if state else f" • {i} {RED}OFF{END} {BOLD}{label}{END}")
     print("")
-    sys.stdout.write("Command: ")
+    sys.stdout.write(f"{BOLD}Command:{END} ")
     sys.stdout.flush()
     return 11 + (1 if len(data) == 0 else len(data))
 
@@ -50,18 +50,18 @@ def choose(data):
     names = list(map(lambda x: x["label"], filter(lambda x: x["state"] == True, data)))
     print("")
     print(f"{UNDER}Pairings:{END}")
-    if len(names) == 0:
-        print(f"{RED}No elements for pairing{END}")
+    if len(names) < 2:
+        print(f"{RED}Too few elements for pairing{END}")
         return
     random.shuffle(names)
     num_pairs = math.floor(len(names) / 2)
     if len(names) % 2 == 1:
         num_pairs -= 1
     for i in range(num_pairs):
-        print(f"• {GREEN}{names[i * 2]}{END} and {GREEN}{names[(i * 2) + 1]}{END}")
+        print(f" • {GREEN}{names[i * 2]}{END} and {GREEN}{names[(i * 2) + 1]}{END}")
     if len(names) % 2 == 1:
         i = len(names)
-        print(f"• {GREEN}{names[i - 3]}{END}, {GREEN}{names[i - 2]}{END}, and {GREEN}{names[i - 1]}{END}")
+        print(f" • {GREEN}{names[i - 3]}{END}, {GREEN}{names[i - 2]}{END}, and {GREEN}{names[i - 1]}{END}")
 
 # Main loop method
 def main():
